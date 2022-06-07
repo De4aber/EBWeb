@@ -6,4 +6,4 @@ services:
       context: ""
     container_name: "ebb-frontend-container"
     ports:
-      - "8092:3000"
+      - "9999:3000"
