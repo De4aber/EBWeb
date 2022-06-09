@@ -1,5 +1,6 @@
+import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
-import tileStore from '../../Stores/tileStore';
+import tileStore, { Tile } from '../../Stores/tileStore';
 import './FrontPage.scss'
 
 const FrontPage = () => {
@@ -16,21 +17,30 @@ const FrontPage = () => {
     fetchData();
   }, []);
 
+  const test = (tile: Tile) => {
+    tile.isClicked = !tile.isClicked;
+    console.log(tile);
+    
+  }
+
   return (
     <>
       {loaded ?
         <div className='FrontPage_Container'>
           <div className='FrontPage_Wrapper'>
-            <ul>
-              {tileStore.tiles.map(tile => (
-                <li key={tile.id}>
-                  <div>
-                    <h3>{tile.condition}</h3>
-                    <p>{tile.ofPerson.name}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className='FrontPage_Grid'>
+              {tileStore.tiles.map((tile, index) => {
+                if (index < 24) {
+                  return (
+                    <div className='FrontPage_Tile' style={{border: tile.isClicked ? '1px solid green' : '1px solid black'}} key={index} onClick={() => test(tile)}>
+                      {tile.condition}
+                    </div>
+                  )
+                }
+                return null;
+              })}
+              <div className='Gratis'>GRATIS</div>
+            </div>
           </div>
         </div>
         : null}
@@ -38,5 +48,5 @@ const FrontPage = () => {
   )
 }
 
-export default FrontPage
+export default observer(FrontPage)
 

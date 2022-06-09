@@ -7,6 +7,7 @@ export interface Tile {
     condition: string;
     ofPersonId: number;
     ofPerson: Person;
+    isClicked: boolean;
 }
 
 export class TileStore {
@@ -16,7 +17,9 @@ export class TileStore {
     @action
     getAll = async () => {
         const response = await tileServices.getAll();
+
         this.tiles = response.data;
+        this.tiles.forEach(tile => { tile.isClicked = false; });
     }
 
     @action
