@@ -8,8 +8,8 @@ const FrontPage = () => {
 
   const [loaded, setLoaded] = useState(false);
   const [started, setStarted] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState<Person[]>([]);
-  const [selectedTiles, setSelectedTiles] = useState<Tile[]>([]);
+  const [selectedUsers] = useState<Person[]>([]);
+  const [selectedTiles] = useState<Tile[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       setLoaded(false);
