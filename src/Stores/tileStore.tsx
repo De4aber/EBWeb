@@ -34,6 +34,12 @@ export class TileStore {
         this.tile = response.data;
     }
 
+    @action
+    getTilesOfPerson = async (personId: number) => {
+        const response = await tileServices.getTilesOfPerson(personId);
+        this.tiles.push(...response.data);
+    }
+
     constructor() {
         makeAutoObservable(this);
     }

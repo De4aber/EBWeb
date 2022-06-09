@@ -4,6 +4,7 @@ import personService from "../Services/personService";
 export interface Person {
     id: number;
     name: string;
+    isClicked: boolean;
 }
 
 export class PersonStore {
@@ -14,6 +15,7 @@ export class PersonStore {
     getAll = async () => {
         const response = await personService.getAll();
         this.allPersons = response.data;
+        this.allPersons.forEach(person => { person.isClicked = false; });
     }
 
     @action
@@ -32,3 +34,6 @@ export class PersonStore {
         makeAutoObservable(this, {}, {autoBind: true});
     }
 }
+
+const personStore = new PersonStore();
+export default personStore;

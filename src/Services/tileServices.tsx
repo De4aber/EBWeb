@@ -7,6 +7,9 @@ export interface createTileDTO {
 }
 
 class TileService {
+    async getTilesOfPerson(personId: number) {
+        return http.get<Tile[]>(`/TileItem/GetByPersonId?personId=${personId}`);
+    }
     async getAll() {
         return http.get<Tile[]>("/TileItem");
     }
