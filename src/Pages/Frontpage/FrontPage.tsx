@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
 import personStore, { Person } from '../../Stores/personStore';
+import personThemeStore from '../../Stores/personThemeStore';
 import tileStore, { Tile } from '../../Stores/tileStore';
-import personThemeStore, {PersonTheme, PersonThemeStore} from "../../Stores/personThemeStore";
 import './FrontPage.scss'
 
 const FrontPage = () => {
@@ -15,9 +15,6 @@ const FrontPage = () => {
     const fetchData = async () => {
       setLoaded(false);
       await personStore?.getAll();
-      console.log(personStore.allPersons);
-
-      console.log(tileStore);
       setLoaded(true);
     }
     fetchData();
@@ -37,8 +34,6 @@ const FrontPage = () => {
       selectedUsers.splice(selectedUsers.indexOf(person), 1);
     }
     console.log(selectedUsers);
-
-
   }
 
   const startGame = async () => {
@@ -59,15 +54,12 @@ const FrontPage = () => {
     setStarted(true);
   }
 
-  const getBackgroundColor =  (person: Person) => {
+  const getBackgroundColor = (person: Person) => {
 
-    if(person.color != undefined){
-      return person.color
-    }
 
     switch (person.id) {
       case 1:
-        return '#ffffff';
+        return '#D4F0F0';
       case 2:
         return '#8FCACA';
       case 3:
@@ -124,15 +116,15 @@ const FrontPage = () => {
                 </div>
                 <div className='FrontPage_UsersContainer'>
                   {selectedUsers.map((user, index) => {
-                    
-                      return (
-                        <div className='FrontPage_UserWrapper' key={index}>
-                          <div className='FrontPage_UserColor' style={{border: '1px solid black', backgroundColor: getBackgroundColor(user) }}>
-                          </div>
-                          <div className='FrontPage_UserName'>{user.name}</div>
+
+                    return (
+                      <div className='FrontPage_UserWrapper' key={index}>
+                        <div className='FrontPage_UserColor' style={{ border: '1px solid black', backgroundColor: getBackgroundColor(user) }}>
                         </div>
-                      )
-                    
+                        <div className='FrontPage_UserName'>{user.name}</div>
+                      </div>
+                    )
+
                   })}
                 </div>
               </>

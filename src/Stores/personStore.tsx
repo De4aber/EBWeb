@@ -1,4 +1,4 @@
-import {makeAutoObservable, observable, action, runInAction} from "mobx";
+import { makeAutoObservable, observable, action, runInAction } from "mobx";
 import personService from "../Services/personService";
 import personThemeStore from "./personThemeStore";
 
@@ -18,15 +18,6 @@ export class PersonStore {
         const response = await personService.getAll();
         this.allPersons = response.data;
         this.allPersons.forEach(person => { person.isClicked = false; });
-        this.allPersons.forEach(async person => {
-            await personThemeStore.getByPersonId(person.id)
-            var theme = personThemeStore.personTheme;
-            console.log(theme)
-            if(theme?.HasPersonTheme){
-                person.color = theme.Color;
-                console.log(person)
-            }
-        });
     }
 
     @action
@@ -42,7 +33,7 @@ export class PersonStore {
     }
 
     constructor() {
-        makeAutoObservable(this, {}, {autoBind: true});
+        makeAutoObservable(this, {}, { autoBind: true });
     }
 }
 
