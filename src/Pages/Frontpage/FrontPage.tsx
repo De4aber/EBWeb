@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
 import personStore, { Person } from '../../Stores/personStore';
-import personThemeStore from '../../Stores/personThemeStore';
 import tileStore, { Tile } from '../../Stores/tileStore';
 import './FrontPage.scss'
 import Logo from '../../Assets/EmilseBilseLogo.svg'
@@ -16,15 +15,21 @@ const FrontPage = () => {
     const fetchData = async () => {
       setLoaded(false);
       await personStore?.getAll();
+      if (localStorage.getItem('selectedTiles') !== null) {
+        selectedTiles.push(JSON.parse(localStorage.getItem('selectedTiles') as string));
+        setStarted(true);
+      }
       setLoaded(true);
     }
     fetchData();
   }, []);
 
   const test = (tile: Tile) => {
-    tile.isClicked = !tile.isClicked;
-    console.log(tile);
+    const selectedTile = selectedTiles.findIndex(t => t.id === tile.id);
 
+    selectedTiles[selectedTile].isClicked = !selectedTiles[selectedTile].isClicked;
+    localStorage.setItem('selectedTiles', JSON.stringify(selectedTiles));
+    tile.isClicked = !tile.isClicked;
   }
 
   const selectPerson = (person: Person) => {
@@ -50,7 +55,11 @@ const FrontPage = () => {
       selectedTiles.push(tempTiles[randomIndex]);
       tempTiles.splice(randomIndex, 1);
     }
-    console.log(selectedTiles);
+    selectedTiles.forEach(tile => { tile.isClicked = false; console.log(tile.isClicked); });
+
+
+
+    localStorage.setItem('selectedTiles', JSON.stringify(selectedTiles));
 
     setStarted(true);
   }
