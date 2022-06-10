@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
 import personStore, { Person } from '../../Stores/personStore';
-import personThemeStore from '../../Stores/personThemeStore';
 import tileStore, { Tile } from '../../Stores/tileStore';
 import './FrontPage.scss'
 import Logo from '../../Assets/EmilseBilseLogo.svg'
