@@ -1,6 +1,5 @@
-import { makeAutoObservable, observable, action, runInAction } from "mobx";
+import { makeAutoObservable, observable, action } from "mobx";
 import personService from "../Services/personService";
-import personThemeStore from "./personThemeStore";
 
 export interface Person {
     id: number;
