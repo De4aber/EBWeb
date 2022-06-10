@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react'
 import personStore, { Person } from '../../Stores/personStore';
 import tileStore, { Tile } from '../../Stores/tileStore';
+import personThemeStore, {PersonTheme, PersonThemeStore} from "../../Stores/personThemeStore";
 import './FrontPage.scss'
 
 const FrontPage = () => {
@@ -58,10 +59,15 @@ const FrontPage = () => {
     setStarted(true);
   }
 
-  const getBackgroundColor = (person: Person) => {
+  const getBackgroundColor =  (person: Person) => {
+
+    if(person.color != undefined){
+      return person.color
+    }
+
     switch (person.id) {
       case 1:
-        return '#D4F0F0';
+        return '#ffffff';
       case 2:
         return '#8FCACA';
       case 3:
