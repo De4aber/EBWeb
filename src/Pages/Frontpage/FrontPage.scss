@@ -1,5 +1,5 @@
-.FrontPage_Container{
-    position:absolute;
+.FrontPage_Container {
+    position: absolute;
     top: 0;
     left: 0;
     display: flex;
@@ -9,21 +9,86 @@
     width: 100%;
     height: calc(100vh - 50px);
     font-size: 10px;
-    .FrontPage_Wrapper{
+    .FrontPage_Wrapper {
         width: 320px;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        .FrontPage_Grid{
+
+        .FrontPage_Logo{
+            padding-top: 50px;
+        }
+        .FrontPage_GridContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex: 1;
+            .FrontPage_Grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+                width: 320px;
+                height: 320px;
+                gap: 5px;
+                .FrontPage_Tile {
+                    box-shadow: inset 0 0 0 1px black;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    min-width: 100%;
+                    min-height: 100%;
+                    cursor: pointer;
+                    user-select: none;
+                }
+                .Gratis {
+                    grid-row-start: 3;
+                    grid-row-end: 3;
+                    grid-column-start: 3;
+                    grid-column-end: 3;
+                    box-shadow: inset 0 0 0 1px green;
+                    box-sizing: border-box;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                }
+            }
+        }
+        .FrontPage_StartContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex: 1;
+            .FrontPage_Start{
+                font-size: 1.5em;
+                font-weight: bold;
+                color: black;
+                cursor: pointer;
+                user-select: none;
+                width: 180px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 20px;
+                border: 1px solid black;
+            }
+        }
+
+        .FrontPage_PersonGrid {
             display: grid;
-            grid-template-columns: repeat(5,1fr);
-            grid-template-rows: repeat(5,1fr);
-            width: 320px;
-            height: 320px;
+            grid-template-columns: repeat(5, minmax(20%, 1fr));
             gap: 5px;
-            .FrontPage_Tile{
+            padding-bottom: 50px;
+            .FrontPage_Tile {
                 box-shadow: inset 0 0 0 1px black;
                 box-sizing: border-box;
                 display: flex;
@@ -34,22 +99,22 @@
                 min-height: 100%;
                 cursor: pointer;
                 user-select: none;
-            }
-            .Gratis{
-                grid-row-start: 3;
-                grid-row-end: 3;
-                grid-column-start: 3;
-                grid-column-end: 3;
-                box-shadow: inset 0 0 0 1px green;
-                box-sizing: border-box;           
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
+                &::before {
+                    content: "";
+                    display: block;
+                    padding-top: 100%;
+                }
+
+                &.content {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
-
-        .FrontPage_UsersContainer{
+        .FrontPage_UsersContainer {
             width: 100%;
             height: 150px;
             display: flex;
@@ -57,13 +122,13 @@
             justify-content: space-evenly;
             align-items: center;
             flex-wrap: wrap;
-            .FrontPage_UserWrapper{
+            .FrontPage_UserWrapper {
                 height: 25px;
                 width: auto;
                 display: flex;
                 flex-direction: row;
                 gap: 5px;
-                .FrontPage_UserColor{
+                .FrontPage_UserColor {
                     width: 25px;
                     height: 25px;
                 }

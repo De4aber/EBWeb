@@ -4,6 +4,7 @@ import personStore, { Person } from '../../Stores/personStore';
 import personThemeStore from '../../Stores/personThemeStore';
 import tileStore, { Tile } from '../../Stores/tileStore';
 import './FrontPage.scss'
+import Logo from '../../Assets/EmilseBilseLogo.svg'
 
 const FrontPage = () => {
 
@@ -98,21 +99,23 @@ const FrontPage = () => {
       {loaded ?
         <div className='FrontPage_Container'>
           < div className='FrontPage_Wrapper'>
-
+            <div className='FrontPage_Logo'><img src={Logo} alt="Logo" /></div>
             {started ?
               <>
-                <div className='FrontPage_Grid'>
-                  {selectedTiles.map((tile, index) => {
-                    if (index < 24) {
-                      return (
-                        <div className='FrontPage_Tile' style={{ boxShadow: tile.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(tile.ofPerson), color: tile.isClicked ? getBackgroundColor(tile.ofPerson) : 'black' }} key={index} onClick={() => test(tile)}>
-                          {tile.condition}
-                        </div>
-                      )
-                    }
-                    return null;
-                  })}
-                  <div className='Gratis'>GRATIS</div>
+                <div className='FrontPage_GridContainer'>
+                  <div className='FrontPage_Grid'>
+                    {selectedTiles.map((tile, index) => {
+                      if (index < 24) {
+                        return (
+                          <div className='FrontPage_Tile' style={{ boxShadow: tile.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(tile.ofPerson), color: tile.isClicked ? getBackgroundColor(tile.ofPerson) : 'black' }} key={index} onClick={() => test(tile)}>
+                            {tile.condition}
+                          </div>
+                        )
+                      }
+                      return null;
+                    })}
+                    <div className='Gratis'>GRATIS</div>
+                  </div>
                 </div>
                 <div className='FrontPage_UsersContainer'>
                   {selectedUsers.map((user, index) => {
@@ -129,17 +132,16 @@ const FrontPage = () => {
                 </div>
               </>
               : <>
-                <div onClick={() => startGame()}>START</div>
-                <div className='FrontPage_Grid'>
+                <div className='FrontPage_StartContainer'>
+                  <div className='FrontPage_Start' onClick={() => startGame()}>START</div>
+                </div>
+                <div className='FrontPage_PersonGrid'>
                   {personStore.allPersons.map((person, index) => {
-                    if (index < 24) {
-                      return (
-                        <div className='FrontPage_Tile' style={{ boxShadow: person.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(person) }} key={index} onClick={() => selectPerson(person)}>
-                          {person.name}
-                        </div>
-                      )
-                    }
-                    return null;
+                    return (
+                      <div className='FrontPage_Tile' style={{ boxShadow: person.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(person) }} key={index} onClick={() => selectPerson(person)}>
+                        {person.name}
+                      </div>
+                    )
                   })}
                 </div>
               </>
