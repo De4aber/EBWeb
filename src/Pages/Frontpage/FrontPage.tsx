@@ -9,27 +9,38 @@ const FrontPage = () => {
 
   const [loaded, setLoaded] = useState(false);
   const [started, setStarted] = useState(false);
-  const [selectedUsers] = useState<Person[]>([]);
-  const [selectedTiles] = useState<Tile[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<Person[]>([]);
+  const [selectedTiles, setSelectedTiles] = useState<Tile[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       setLoaded(false);
       await personStore?.getAll();
       if (localStorage.getItem('selectedTiles') !== null) {
-        selectedTiles.push(JSON.parse(localStorage.getItem('selectedTiles') as string));
+        setSelectedTiles((JSON.parse(window.localStorage.getItem('selectedTiles') as string)));
+        setSelectedUsers((JSON.parse(window.localStorage.getItem('selectedUsers') as string)));
         setStarted(true);
       }
       setLoaded(true);
     }
     fetchData();
+
   }, []);
 
-  const test = (tile: Tile) => {
-    const selectedTile = selectedTiles.findIndex(t => t.id === tile.id);
+  useEffect(() => {
+    if (selectedTiles.length > 0) {
+      
+      window.localStorage.setItem('selectedTiles', JSON.stringify(selectedTiles));
+    }
+  }, [selectedTiles]);
 
-    selectedTiles[selectedTile].isClicked = !selectedTiles[selectedTile].isClicked;
-    localStorage.setItem('selectedTiles', JSON.stringify(selectedTiles));
-    tile.isClicked = !tile.isClicked;
+  const onClickTile = (tile: Tile) => {
+    const selectedTile = selectedTiles.findIndex(t => t.id === tile.id);
+    
+    let items = [...selectedTiles];
+    let item = {...items[selectedTile]}
+    item.isClicked = !item.isClicked;
+    items[selectedTile] = item;
+    setSelectedTiles(items);
   }
 
   const selectPerson = (person: Person) => {
@@ -40,6 +51,7 @@ const FrontPage = () => {
       selectedUsers.splice(selectedUsers.indexOf(person), 1);
     }
     console.log(selectedUsers);
+    localStorage.setItem('selectedUsers', JSON.stringify(selectedUsers));
   }
 
   const startGame = async () => {
@@ -57,17 +69,14 @@ const FrontPage = () => {
     }
     selectedTiles.forEach(tile => { tile.isClicked = false; console.log(tile.isClicked); });
 
-
-
     localStorage.setItem('selectedTiles', JSON.stringify(selectedTiles));
 
     setStarted(true);
   }
 
-  const getBackgroundColor = (person: Person) => {
+  const getBackgroundColor = (id: number) => {
 
-
-    switch (person.id) {
+    switch (id) {
       case 1:
         return '#D4F0F0';
       case 2:
@@ -116,7 +125,7 @@ const FrontPage = () => {
                     {selectedTiles.map((tile, index) => {
                       if (index < 24) {
                         return (
-                          <div className='FrontPage_Tile' style={{ boxShadow: tile.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(tile.ofPerson), color: tile.isClicked ? getBackgroundColor(tile.ofPerson) : 'black' }} key={index} onClick={() => test(tile)}>
+                          <div className='FrontPage_Tile' style={{ boxShadow: tile.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(tile.ofPersonId), color: tile.isClicked ? getBackgroundColor(tile.ofPersonId) : 'black' }} key={index} onClick={() => onClickTile(tile)}>
                             {tile.condition}
                           </div>
                         )
@@ -131,7 +140,7 @@ const FrontPage = () => {
 
                     return (
                       <div className='FrontPage_UserWrapper' key={index}>
-                        <div className='FrontPage_UserColor' style={{ border: '1px solid black', backgroundColor: getBackgroundColor(user) }}>
+                        <div className='FrontPage_UserColor' style={{ border: '1px solid black', backgroundColor: getBackgroundColor(user.id) }}>
                         </div>
                         <div className='FrontPage_UserName'>{user.name}</div>
                       </div>
@@ -147,7 +156,7 @@ const FrontPage = () => {
                 <div className='FrontPage_PersonGrid'>
                   {personStore.allPersons.map((person, index) => {
                     return (
-                      <div className='FrontPage_Tile' style={{ boxShadow: person.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(person) }} key={index} onClick={() => selectPerson(person)}>
+                      <div className='FrontPage_Tile' style={{ boxShadow: person.isClicked ? 'inset 0 0 0 2px green' : 'inset 0 0 0 1px black', backgroundColor: getBackgroundColor(person.id) }} key={index} onClick={() => selectPerson(person)}>
                         {person.name}
                       </div>
                     )
