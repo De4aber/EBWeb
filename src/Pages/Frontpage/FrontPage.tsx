@@ -112,6 +112,14 @@ const FrontPage = () => {
     }
   }
 
+  const newGame = () => {
+    setStarted(false);
+    setSelectedUsers([]);
+    setSelectedTiles([]);
+    localStorage.removeItem('selectedTiles');
+    localStorage.removeItem('selectedUsers');
+  }
+
   return (
     <>
       {loaded ?
@@ -119,7 +127,10 @@ const FrontPage = () => {
           < div className='FrontPage_Wrapper'>
             <div className='FrontPage_Logo'><img src={Logo} alt="Logo" /></div>
             {started ?
-              <>
+              <> 
+                <div className='FrontPage_NewGameContainer'>
+                  <div className='FrontPage_NewGameButton' onClick={() => newGame()}>New Game</div>
+                </div>
                 <div className='FrontPage_GridContainer'>
                   <div className='FrontPage_Grid'>
                     {selectedTiles.map((tile, index) => {
