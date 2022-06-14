@@ -75,9 +75,9 @@ const FrontPage = () => {
       case 3:
         return '#CCE2CB';
       case 4:
-        return '#B6CFB6';
-      case 5:
         return '#97C1A9';
+      case 5:
+        return '#B6CFB6';
       case 6:
         return '#FF968A';
       case 7:
